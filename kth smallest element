@@ -1,0 +1,49 @@
+class Solution{
+    public:
+    // arr : given array
+    // l : starting index of the array i.e 0
+    // r : ending index of the array i.e size-1
+    // k : find kth smallest element and return using this function
+    int size;
+void Heapify_min(int *arr, int i)
+{
+    int smallest = i;
+    int left = (2 * i) + 1;
+    int right = (2 * i) + 2;
+
+    if (left < size && arr[smallest] > arr[left])
+        smallest = left;
+    if (right < size && arr[smallest] > arr[right])
+        smallest = right;
+    if (smallest != i)
+    {
+        swap(arr[i], arr[smallest]);
+        Heapify_min(arr,smallest);
+    }
+}
+void Bulid_heap(int *arr, int n)
+{   size=n;
+    for (int i = (n / 2) - 1; i >= 0; i--)
+    {
+        Heapify_min(arr, i);
+    }
+}
+int deleteroot(int*arr)
+{
+    int returnval=arr[0];
+    arr[0]=arr[size-1];
+    size--;
+    Heapify_min(arr,0);
+    return returnval;
+}
+int kthSmallest(int arr[], int l, int r, int k)
+{
+    Bulid_heap(arr,r+1);
+    int returnval;
+    for (int i = 1; i <= k; i++)
+    {
+       returnval=deleteroot(arr);
+    }
+    return returnval;    
+}
+};
